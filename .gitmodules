@@ -1,0 +1,3 @@
+[submodule "gvar"]
+	path = gvar
+	url = git@github.com:hvaldecantos/gvar.git
