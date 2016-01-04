@@ -1,0 +1,18 @@
+PATH
+  remote: ./gvar
+  specs:
+    gvar (0.1.0)
+      mongo (~> 2.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    bson (4.0.0)
+    mongo (2.2.1)
+      bson (~> 4.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  gvar!
