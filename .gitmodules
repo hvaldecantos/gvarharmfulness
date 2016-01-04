@@ -1,3 +1,6 @@
 [submodule "gvar"]
 	path = gvar
 	url = git@github.com:hvaldecantos/gvar.git
+[submodule "projects/sed"]
+	path = projects/sed
+	url = git://git.savannah.gnu.org/sed.git
