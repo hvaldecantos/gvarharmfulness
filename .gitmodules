@@ -4,3 +4,6 @@
 [submodule "projects/sed"]
 	path = projects/sed
 	url = git://git.savannah.gnu.org/sed.git
+[submodule "projects/cpio"]
+	path = projects/cpio
+	url = git://git.savannah.gnu.org/cpio.git
