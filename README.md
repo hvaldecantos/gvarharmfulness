@@ -9,18 +9,15 @@ the required data.
 There are git submodules inside this project, therefore you need to clone the
 other projects on which gvarharmfulness depends on.
 
-To download all projects at once:
+To clone and download all projects in once step:
 
 ```
 $ git clone --recursive git@gitlab.com:hvaldecantos/gvarharmfulness.git
 ```
 
-To clone gvarharmfulness and download gvar project:
+To clone gvarharmfulness project and download git submodules in separate steps:
 ```
 $ git clone git@gitlab.com:hvaldecantos/gvarharmfulness.git
-$ cd gvarharmfulness/gvar
 $ git submodule init
 $ git submodule update
 ```
-
-For the other projects just follow a similar procedure.
