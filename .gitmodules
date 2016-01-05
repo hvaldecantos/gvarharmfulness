@@ -7,3 +7,6 @@
 [submodule "projects/cpio"]
 	path = projects/cpio
 	url = git://git.savannah.gnu.org/cpio.git
+[submodule "projects/gtk+"]
+	path = projects/gtk+
+	url = git://git.gnome.org/gtk+
