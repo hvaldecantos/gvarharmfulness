@@ -77,8 +77,8 @@ File.open('config/projects_to_analyze.config').each_line do |line|
   end
 
   # Create a csv file with the definition of all gvars in the project
-  puts `mongoexport --db i_#{project} --collection globals | ruby get_gvar_def.rb #{project}`
+  puts `mongoexport --db #{PREFIX}_#{project} --collection globals | ruby get_gvar_def.rb #{project}`
 
   # Write in a file all bugfix commits messages and patches ordered by gvars
-  `mongoexport --db i_#{project} --collection globals | ruby get_bugfix_commits_info_by_gvar.rb projects/#{project}/ > results/#{project}_gvar_bugs.txt`
+  `mongoexport --db #{PREFIX}_#{project} --collection globals | ruby get_bugfix_commits_info_by_gvar.rb projects/#{project}/ > results/#{project}_gvar_bugs.txt`
 end
