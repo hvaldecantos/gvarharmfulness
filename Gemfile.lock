@@ -8,6 +8,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     bson (4.0.0)
+    envyable (0.2.0)
     mongo (2.2.1)
       bson (~> 4.0)
 
@@ -15,4 +16,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  envyable (~> 0.2.0)
   gvar!

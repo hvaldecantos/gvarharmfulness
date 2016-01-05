@@ -1,4 +1,5 @@
 require 'csv'
+require 'envyable'
 
 def get_project_age dir
  `gvar --project-inf --dirs="['#{dir}']" --rev-range=master`.strip
@@ -44,8 +45,9 @@ def get_extra_data project
 end
 
 #############################################
+Envyable.load('./config/env.yml', 'database')
 
-PREFIX = "i"
+PREFIX = ENV['PREFIX_DB_NAME']
 cwd = Dir.getwd
 
 headers = ["project", "branch", "dir", "age", "commits", "bfs", "gvars", "bfs_rel_gvar", "gvars_rel_bf", "gvars_bf_count", "gvars_removed"]
