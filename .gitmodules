@@ -25,3 +25,6 @@
 [submodule "projects/grep"]
 	path = projects/grep
 	url = git://git.savannah.gnu.org/grep.git
+[submodule "projects/gedit"]
+	path = projects/gedit
+	url = git://git.gnome.org/gedit
