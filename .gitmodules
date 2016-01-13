@@ -28,3 +28,6 @@
 [submodule "projects/gedit"]
 	path = projects/gedit
 	url = git://git.gnome.org/gedit
+[submodule "projects/dia"]
+	path = projects/dia
+	url = git://git.gnome.org/dia
