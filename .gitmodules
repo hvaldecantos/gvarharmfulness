@@ -19,3 +19,6 @@
 [submodule "projects/make"]
 	path = projects/make
 	url = git://git.savannah.gnu.org/make.git
+[submodule "projects/bash"]
+	path = projects/bash
+	url = git://git.savannah.gnu.org/bash.git
