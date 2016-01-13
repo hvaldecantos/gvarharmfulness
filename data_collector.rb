@@ -56,7 +56,7 @@ PREFIX = ENV['PREFIX_DB_NAME']
 cwd = Dir.getwd
 
 headers = ["project", "branch", "dir", "age", "commits", "bfs", "gvars", "bfs_rel_gvar", "gvars_rel_bf", "gvars_bf_count", "gvars_removed"]
-CSV.open('results/data_gvar.csv', "w+") {|row| row << headers }
+CSV.open("results/#{PREFIX}_data_gvar.csv", "w+") {|row| row << headers }
 
 start_time_whole = Time.now
 
@@ -85,17 +85,17 @@ File.open('config/projects_to_analyze.config').each_line do |line|
 
   gvars, gvars_rel_bf, gvars_bf_count, bfs_rel_gvar, gvars_removed = get_extra_data(project)
 
-  CSV.open('results/data_gvar.csv', "a+") do |row|
+  CSV.open("results/#{PREFIX}_data_gvar.csv", "a+") do |row|
     row << [project, "master", dir, age, commits, bf_commits, gvars, bfs_rel_gvar, gvars_rel_bf, gvars_bf_count, gvars_removed]
   end
   csv_end_time = Time.now
-  puts "data analized from db and saved in data_gvar.csv file [#{sec_to_dhms(csv_end_time - gvar_end_time)}]"
+  puts "data analized from db and saved in #{PREFIX}_data_gvar.csv file [#{sec_to_dhms(csv_end_time - gvar_end_time)}]"
 
   # Create a csv file with the definition of all gvars in the project
   puts `mongoexport --db #{PREFIX}_#{project} --collection globals | ruby get_gvar_def.rb #{project}`
 
   # Write in a file all bugfix commits messages and patches ordered by gvars
-  `mongoexport --db #{PREFIX}_#{project} --collection globals | ruby get_bugfix_commits_info_by_gvar.rb projects/#{project}/ > results/#{project}_gvar_bugs.txt`
+  `mongoexport --db #{PREFIX}_#{project} --collection globals | ruby get_bugfix_commits_info_by_gvar.rb projects/#{project}/ > results/#{PREFIX}_#{project}_gvar_bugs.txt`
   texts_end_time = Time.now
   puts "gvars definitions and commits messages saved in text files [#{sec_to_dhms(texts_end_time - csv_end_time)}]"
   puts "total time [#{sec_to_dhms(texts_end_time - start_time)}]"
