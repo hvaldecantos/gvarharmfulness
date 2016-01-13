@@ -64,4 +64,24 @@ database:
   PREFIX_DB_NAME: i
 ```
 
-The prefix db name will result in mongo databases like `i_gtk+`, `i_sed+`, etc.
+The prefix db name will result in mongo database names like `i_gtk+`, `i_sed+`, etc.
+
+# Install ruby dependencies
+
+Ruby gem dependencies are written in `Gemfile`, you can install them using bundler.
+
+```
+$ cd gvarharmfulness
+$ bundle install
+```
+
+If bundler is not installed just do `$ gem bundler install` and them install
+
+# Run the project
+
+```
+$ cd gvarharmfulness
+$ ruby data_collector.rb
+```
+
+The data collector will read configuration, gather data from project, store data in mongo dbs, and write results for each project in `results/` directory.
