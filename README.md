@@ -24,7 +24,9 @@ $ git submodule update
 
 # Running gvarharmfulness project
 
-Install Ruby Version Manager (RVM). For security you need to install the RVM maitainer's public key, then download RVM using curl, run an rvm script, and add a instruction in .bashrc (for ubuntu) to load RVM in your session. You can read https://rvm.io/rvm/install if you need.
+## Install Ruby Version Manager (RVM).
+
+For security you need to install the RVM maitainer's public key, then download RVM using curl, run an rvm script, and add a instruction in .bashrc (for ubuntu) to load RVM in your session. You can read https://rvm.io/rvm/install if you need.
 
 ```
 $ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
@@ -39,12 +41,13 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 Once RVM is installed, open a new terminal and go to the project's directory. RVM should warn you to install the required ruby version for the project, just follow the instructions.
 
-Install required dependencies in your system:
+## Install required dependencies in your system:
 
 * Git: http://www.git-scm.com/
 * Mongodb: https://www.mongodb.org/
 * Exuberant ctags: http://ctags.sourceforge.net/
 
+## Configure your project
 Configure what projects you want to analyze. A `config/projects_to_analyze.config` file looks like this:
 
 ```
@@ -66,7 +69,7 @@ database:
 
 The prefix db name will result in mongo database names like `i_gtk+`, `i_sed+`, etc.
 
-# Install ruby dependencies
+## Install ruby dependencies
 
 Ruby gem dependencies are written in `Gemfile`, you can install them using bundler.
 
@@ -77,7 +80,7 @@ $ bundle install
 
 If bundler is not installed just do `$ gem bundler install` and them install
 
-# Run the project
+## Run the project
 
 ```
 $ cd gvarharmfulness
