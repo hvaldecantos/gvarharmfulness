@@ -1,6 +1,11 @@
 require 'csv'
 require 'envyable'
 
+def sec_to_dhms s
+  dhms = [60, 60, 24].reduce([s]) { |m,o| m.unshift(m.shift.divmod(o)).flatten }
+  "%0.2d %0.2d:%0.2d:%0.2d" % dhms
+end
+
 def get_project_age dir
  `gvar --project-inf --dirs="['#{dir}']" --rev-range=master`.strip
 end
@@ -53,8 +58,12 @@ cwd = Dir.getwd
 headers = ["project", "branch", "dir", "age", "commits", "bfs", "gvars", "bfs_rel_gvar", "gvars_rel_bf", "gvars_bf_count", "gvars_removed"]
 CSV.open('results/data_gvar.csv', "w+") {|row| row << headers }
 
+start_time_whole = Time.now
+
 File.open('config/projects_to_analyze.config').each_line do |line|
   project, dir = line.split
+
+  start_time = Time.now
   puts "------------------> #{project}"
 
   wd = cwd + "/projects/" + project
@@ -70,15 +79,28 @@ File.open('config/projects_to_analyze.config').each_line do |line|
     `git checkout master`
     Dir.chdir cwd
   end
+  # code to time
+  gvar_end_time = Time.now
+  puts "data extrated from project and saved in mongo database #{PREFIX}_#{project} [#{sec_to_dhms(gvar_end_time - start_time)}]"
+
   gvars, gvars_rel_bf, gvars_bf_count, bfs_rel_gvar, gvars_removed = get_extra_data(project)
 
   CSV.open('results/data_gvar.csv', "a+") do |row|
     row << [project, "master", dir, age, commits, bf_commits, gvars, bfs_rel_gvar, gvars_rel_bf, gvars_bf_count, gvars_removed]
   end
+  csv_end_time = Time.now
+  puts "data analized from db and saved in data_gvar.csv file [#{sec_to_dhms(csv_end_time - gvar_end_time)}]"
 
   # Create a csv file with the definition of all gvars in the project
   puts `mongoexport --db #{PREFIX}_#{project} --collection globals | ruby get_gvar_def.rb #{project}`
 
   # Write in a file all bugfix commits messages and patches ordered by gvars
   `mongoexport --db #{PREFIX}_#{project} --collection globals | ruby get_bugfix_commits_info_by_gvar.rb projects/#{project}/ > results/#{project}_gvar_bugs.txt`
+  texts_end_time = Time.now
+  puts "gvars definitions and commits messages saved in text files [#{sec_to_dhms(texts_end_time - csv_end_time)}]"
+  puts "total time [#{sec_to_dhms(texts_end_time - start_time)}]"
 end
+
+puts
+puts "Total time consumed for all projects: #{sec_to_dhms(Time.now - start_time_whole)}"
+puts
