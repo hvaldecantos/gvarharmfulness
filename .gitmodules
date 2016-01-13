@@ -13,3 +13,9 @@
 [submodule "projects/wget"]
 	path = projects/wget
 	url = git://git.savannah.gnu.org/wget.git
+[submodule "projects/gzip"]
+	path = projects/gzip
+	url = git://git.savannah.gnu.org/gzip.git
+[submodule "projects/make"]
+	path = projects/make
+	url = git://git.savannah.gnu.org/make.git
