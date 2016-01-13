@@ -10,3 +10,6 @@
 [submodule "projects/gtk+"]
 	path = projects/gtk+
 	url = git://git.gnome.org/gtk+
+[submodule "projects/wget"]
+	path = projects/wget
+	url = git://git.savannah.gnu.org/wget.git
