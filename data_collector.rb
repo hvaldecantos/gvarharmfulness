@@ -98,9 +98,10 @@ File.open('config/projects_to_analyze.config').each_line do |line|
   `mongoexport --db #{PREFIX}_#{project} --collection globals | ruby get_bugfix_commits_info_by_gvar.rb projects/#{project}/ > results/#{PREFIX}_#{project}_gvar_bugs.txt`
   texts_end_time = Time.now
   puts "gvars definitions and commits messages saved in text files [#{sec_to_dhms(texts_end_time - csv_end_time)}]"
+
   puts "total time [#{sec_to_dhms(texts_end_time - start_time)}]"
 end
-
+puts `ruby gvar_selector.rb`
 puts
 puts "Total time consumed for all projects: #{sec_to_dhms(Time.now - start_time_whole)}"
 puts
