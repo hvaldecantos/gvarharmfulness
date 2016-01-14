@@ -31,3 +31,6 @@
 [submodule "projects/dia"]
 	path = projects/dia
 	url = git://git.gnome.org/dia
+[submodule "projects/screen"]
+	path = projects/screen
+	url = git://git.savannah.gnu.org/screen.git
