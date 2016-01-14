@@ -1,6 +1,10 @@
 require 'json'
 require 'csv'
 require 'set'
+require 'envyable'
+
+Envyable.load('./config/env.yml', 'database')
+PREFIX = ENV['PREFIX_DB_NAME']
 
 # mongoexport --db i_cpio --collection globals | ruby get_gvar_def.rb 
 
@@ -12,7 +16,7 @@ json = JSON.parse(contents)
 total_gv = 0
 
 headers = ["gv", "filename", "line", "sha", "bugcount"]
-csv_filename = "results/#{project}_gvar_def.csv"
+csv_filename = "results/#{PREFIX}_#{project}_gvar_def.csv"
 CSV.open(csv_filename, "w+") do |row|
   row << headers
 end
