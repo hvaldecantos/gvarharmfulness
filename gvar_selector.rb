@@ -3,7 +3,8 @@ require 'envyable'
 
 Envyable.load('./config/env.yml', 'database')
 PREFIX = ENV['PREFIX_DB_NAME']
-GVAR_NUMBER = 100
+Envyable.load('./config/env.yml', 'results')
+GVAR_NUMBER = ENV['GVAR_NUMBER_SELECTED'].to_i
 
 def read_results
   results = {}
@@ -29,21 +30,14 @@ projects = {}
 total_gvars = 0
 
 read_results.each do |proj, res|
-  # puts "#{PREFIX}_#{proj}_gvar_def.csv"
-  # puts res[:bfs]
   total_gvars += res[:bfs]
   projects.merge!({"#{proj}" => {file: "results/#{PREFIX}_#{proj}_gvar_def.csv", total: res[:bfs]}})
 end
 
 projects.map do |k, v|
-  # total = v[:total]
-  puts "-------------------------------------------------"
-  puts "#{v[:total]}"
-  puts "#{total_gvars.to_f}"
-  puts "#{(v[:total] / total_gvars.to_f).ceil}"
-  puts "(v[:total] / total_gvars.to_f).ceil * GVAR_NUMBER"
-  puts "-------------------------------------------------"
-  {k => v.merge!({:select => ((v[:total] / total_gvars.to_f) * GVAR_NUMBER).ceil })}
+  gvar_selected = ((v[:total] / total_gvars.to_f) * GVAR_NUMBER).round
+  puts "Project #{k}: #{gvar_selected} gvars selected"
+  {k => v.merge!({:select => gvar_selected })}
 end
 
 p projects
