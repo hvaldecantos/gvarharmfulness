@@ -40,8 +40,6 @@ projects.map do |k, v|
   {k => v.merge!({:select => gvar_selected })}
 end
 
-p projects
-
 projects.each do |k,v|
   select_from k, v[:file], v[:total], v[:select]
 end
