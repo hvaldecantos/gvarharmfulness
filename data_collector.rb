@@ -72,6 +72,7 @@ File.open('config/projects_to_analyze.config').each_line do |line|
     Dir.chdir wd
     `git checkout master`
     `gvar --store-commits --db=#{PREFIX}_#{project} --dirs="['#{dir}']" --rev-range=master`
+    `git checkout master`
     age = get_project_age(dir)
     commits = get_all_commit_num(dir)
     bf_commits = get_all_bf_commits_num(dir)
