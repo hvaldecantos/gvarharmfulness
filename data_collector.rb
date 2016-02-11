@@ -1,21 +1,22 @@
 require 'csv'
 require 'envyable'
+require 'logger'
 
 def sec_to_dhms s
   dhms = [60, 60, 24].reduce([s]) { |m,o| m.unshift(m.shift.divmod(o)).flatten }
   "%0.2d %0.2d:%0.2d:%0.2d" % dhms
 end
 
-def get_project_age dir
- `gvar --project-inf --dirs="['#{dir}']" --rev-range=master`.strip
+def get_project_age filters, cwd = '.'
+ `gvar --project-inf --filters="#{filters}" --rev-range=master --logpath=#{cwd}`.strip
 end
 
-def get_all_commit_num dir 
- `gvar --list-shas --dirs="['#{dir}']" --rev-range=master | wc -l`.strip
+def get_all_commit_num filters, cwd = '.'
+ `gvar --list-shas --filters="#{filters}" --rev-range=master --logpath=#{cwd} | wc -l`.strip
 end
 
-def get_all_bf_commits_num dir                                                   
-  `gvar --count-all-bugs --dirs="['#{dir}']" --rev-range=master`.strip
+def get_all_bf_commits_num filters, cwd = '.'
+  `gvar --count-all-bugs --filters="#{filters}" --rev-range=master --logpath=#{cwd}`.strip
 end
 
 def get_extra_data project
@@ -65,19 +66,24 @@ File.open('config/projects_to_analyze.config').each_line do |line|
 
   start_time = Time.now
   puts "------------------> #{project}"
-
   wd = cwd + "/projects/" + project
+
+  Logger.new("#{cwd}/command_execution.log").info("-------------------------------------------------------")
+  Logger.new("#{cwd}/command_execution.log").info("#{wd} in dirs #{dir}")
 
   begin
     Dir.chdir wd
-    `git checkout master`
-    `gvar --store-commits --db=#{PREFIX}_#{project} --dirs="['#{dir}']" --rev-range=master`
-    `git checkout master`
-    age = get_project_age(dir)
-    commits = get_all_commit_num(dir)
-    bf_commits = get_all_bf_commits_num(dir)
-  ensure
-    `git checkout master`
+    # `git checkout master`
+    `gvar --checkout --sha=master --logpath=#{cwd}`
+    `gvar --store-commits --db=#{PREFIX}_#{project} --directories="#{dir}" --rev-range=master --logpath=#{cwd}`
+    # `git checkout master`
+    `gvar --checkout --sha=master --logpath=#{cwd}`
+    filters = `gvar --find-git-filters --directories="#{dir}" --logpath=#{cwd}`.strip
+    age = get_project_age(filters, cwd)
+    commits = get_all_commit_num(filters, cwd)
+    bf_commits = get_all_bf_commits_num(filters, cwd)
+    # `git checkout master`
+    `gvar --checkout --sha=master --logpath=#{cwd}`
     Dir.chdir cwd
   end
   # code to time
