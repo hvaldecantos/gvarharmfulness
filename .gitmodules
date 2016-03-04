@@ -34,3 +34,6 @@
 [submodule "projects/screen"]
 	path = projects/screen
 	url = git://git.savannah.gnu.org/screen.git
+[submodule "projects/gnome-calendar"]
+	path = projects/gnome-calendar
+	url = git://git.gnome.org/gnome-calendar
