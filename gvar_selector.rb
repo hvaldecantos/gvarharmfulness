@@ -30,8 +30,8 @@ projects = {}
 total_gvars = 0
 
 read_results.each do |proj, res|
-  total_gvars += res[:bfs]
-  projects.merge!({"#{proj}" => {file: "results/#{PREFIX}_#{proj}_gvar_def.csv", total: res[:bfs]}})
+  total_gvars += res[:gvars]
+  projects.merge!({"#{proj}" => {file: "results/#{PREFIX}_#{proj}_gvar_def.csv", total: res[:gvars]}})
 end
 
 projects.map do |k, v|
